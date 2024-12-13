@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package seabattleservice;
+
+
+
+message Response {
+  string message = 1;
+  bool success = 2;
+}
+
+message PlayerInfo {
+  string name = 1;
+  int32 id = 2;
+}
+
+message MoveRequest {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message PlayerRequest {
+  PlayerInfo player = 1;
+}
+
+message BoardInfo {
+  repeated CellInfo cells = 1;
+}
+
+message CellInfo {
+  int32 row = 1;
+  int32 col = 2;
+  CellStateInfo state = 3;
+}
+
+enum CellStateInfo {
+  EMPTY = 0;
+  SHIP = 1;
+  HIT = 2;
+  MISS = 3;
+}
+
+message PlaceShipRequest {
+  repeated CoordinateInfo coordinates = 1;
+  int32 size = 2;
+  PlayerInfo player = 3;
+}
+
+message CoordinateInfo {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message BoolResponse {
+  bool value = 1;
+}
+
+message CellRequest {
+  int32 row = 1;
+  int32 col = 2;
+  PlayerInfo player = 3;
+}
+
+message BoardUpdate {
+  BoardInfo player1Board = 1;
+  BoardInfo player2Board = 2;
+}
+
+service SeaBattleService {
+  rpc registerPlayer (PlayerInfo) returns (Response);
+  rpc getPlayer1 (google.protobuf.Empty) returns (PlayerInfo);
+  rpc getPlayer2 (google.protobuf.Empty) returns (PlayerInfo);
+  rpc startGame (google.protobuf.Empty) returns (Response);
+  rpc makeMove (MoveRequest) returns (Response);
+  rpc getOpponentBoardForPlayer (PlayerRequest) returns (BoardInfo);
+  rpc placeShip (PlaceShipRequest) returns (Response);
+  rpc isGameOver (google.protobuf.Empty) returns (BoolResponse);
+  rpc getWinner (google.protobuf.Empty) returns (PlayerInfo);
+  rpc isFirstPlayer (PlayerInfo) returns (BoolResponse);
+  rpc getPlayerBoard (PlayerInfo) returns (BoardInfo);
+  rpc isCellOccupied (CellRequest) returns (BoolResponse);
+  rpc getCurrentPlayer (google.protobuf.Empty) returns (PlayerInfo);
+  rpc subscribeToBoardUpdates (google.protobuf.Empty) returns (stream BoardUpdate);
+}

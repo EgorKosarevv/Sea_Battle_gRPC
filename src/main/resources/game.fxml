@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+
+
+<HBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.SeaBattleController" spacing="20" alignment="CENTER">
+    <!-- Левая часть: Поле для расстановки своих кораблей -->
+    <VBox alignment="CENTER" spacing="10">
+        <Label text="Поле для расстановки кораблей"/>
+        <GridPane fx:id="player1Board" hgap="5" vgap="5"/>
+    </VBox>
+
+    <!-- Правая часть: Поле для атак по противнику -->
+    <VBox alignment="CENTER" spacing="10">
+        <Label text="Поле для атаки"/>
+        <GridPane fx:id="player2Board" hgap="5" vgap="5"/>
+    </VBox>
+
+    <VBox alignment="CENTER" spacing="10">
+        <TextField fx:id="playerNameField" promptText="Введите имя игрока" />
+        <Button fx:id="registerButton" text="Регистрация" onAction="#registerPlayer" />
+        <Button fx:id="placeShipsButton" text="Расставить корабли"/>
+        <Button fx:id="attackButton" text="Сделать ход" />
+        <!--    <Button fx:id="startGameButton" text="Начать игру" onAction="#startGameIfReady" />-->
+    </VBox>
+</HBox>
